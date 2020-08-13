@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, VmFactory).get(CountLiveData::class.java)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        viewModel.lifecycleOwner = this
         viewModel.startTimer()
     }
 }

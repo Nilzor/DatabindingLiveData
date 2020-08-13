@@ -3,6 +3,7 @@ package com.example.databindingtest
 
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.*
@@ -14,10 +15,14 @@ class CountLiveData : ViewModel() {
     private var counter: Int = 0
 
     private val timer = Timer()
+    lateinit var lifecycleOwner: LifecycleOwner
 
     fun startTimer() {
         counterLiveBg.observeForever({
-            Log.d("TAG", "Hi counterLiveBg tells me the new value is ${counterLiveBg.value}")
+            Log.d("TAG", "Hi counterLiveBg observeForever tells me the new value is ${counterLiveBg.value}")
+        })
+        counterLiveBg.observe(lifecycleOwner, androidx.lifecycle.Observer {
+            Log.d("TAG", "Hi counterLiveBg observe with lifecycleOwner tells me the new value is ${counterLiveBg.value}")
         })
 
         timer.scheduleAtFixedRate(object : TimerTask()  {
